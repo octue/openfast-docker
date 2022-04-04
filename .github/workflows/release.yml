@@ -1,0 +1,60 @@
+# This workflow releases a new version of the package and builds and pushes a new docker image.
+
+name: Release
+
+# Only trigger when a pull request into main branch is merged.
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    needs: run-tests
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+
+    - name: Get package version
+      run: echo "PACKAGE_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, no need to create your own.
+      with:
+        tag_name: ${{ env.PACKAGE_VERSION }}
+        release_name: ${{ github.event.pull_request.title }}
+        body: ${{ github.event.pull_request.body }}
+        draft: false
+        prerelease: false
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: release
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Get package version
+        run: echo "PACKAGE_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2.8.0
+        with:
+          context: .
+          push: true
+          tags: octue/openfast:${{ env.PACKAGE_VERSION }},octue/openfast:latest
