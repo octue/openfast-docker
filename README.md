@@ -1,7 +1,7 @@
-# OpenFast Docker
+# OpenFAST Docker
 This repository contains a Dockerfile for producing working installations of 
 [OpenFAST](https://github.com/OpenFAST/openfast) in a python/conda-based docker image. Releases trigger a build of and
-push to the [`octue/openfast`](https://hub.docker.com/r/octue/openfast) DockerHub repository. Each tag matches the 
+push to the [`octue/openfast`](https://hub.docker.com/r/octue/openfast) DockerHub repository. Each image tag matches the 
 version number of the release, which in turn matches the version of OpenFAST installed in that image. The containers are
 built for the `linux/amd64` platform.
 
