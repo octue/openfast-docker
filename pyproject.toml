@@ -1,0 +1,7 @@
+[tool.poetry]
+name = "openfast-docker"
+version = "3.1.0"
+description = "A docker image of the conda distribution of OpenFAST."
+authors = ["cortadocodes <cortado.codes@protonmail.com>"]
+repository = "https://www.github.com/octue/openfast-docker"
+keywords = ["openfast", "OpenFAST", "wind", "wind-turbine", "wind-energy", "aeroelasticity", "wind-farm", "wind-power", "renewables", "energy", "NREL"]
