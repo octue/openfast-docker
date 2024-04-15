@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> This repository is now archived because we have [added](https://github.com/OpenFAST/openfast/pull/2121) generation
+> of production docker images to [OpenFAST itself](https://github.com/OpenFAST/openfast/tree/main/share/docker).
+> Please use the `Dockerfile` and images there instead.
+
 # OpenFAST Docker
 This repository contains a Dockerfile for producing working installations of 
 [OpenFAST](https://github.com/OpenFAST/openfast) in a python/conda-based docker image. Releases trigger a build of and
